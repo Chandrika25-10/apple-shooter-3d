@@ -1,5 +1,5 @@
-<<<<<<< HEAD
 🍎 Apple Shooter 3D — Forest Range
+
 Apple Shooter 3D — Forest Range is a browser-based, canvas-rendered archery challenge designed to bring interactive physics, escalating difficulty, and character progression into a zero-dependency web experience.
 
 The game models arrow trajectories, target movement, elevation adjustments, and persistent unlocks entirely in vanilla web technologies—running straight out of the box with no installations or builds required.
@@ -623,5 +623,4 @@ Apple Shooter 3D — Forest Adventure is a browser-playable archery game that co
 
 ## 📜 License
 
-This project is developed for educational and academic purposes. Add a specific open-source license file if you intend to distribute the project under a formal license.
->>>>>>> feature/Charishma
+This project is developed for educational and academic purposes.
