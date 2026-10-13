@@ -5,9 +5,9 @@ Apple Shooter 3D — Forest Range is a browser-based, canvas-rendered archery ch
 The game models arrow trajectories, target movement, elevation adjustments, and persistent unlocks entirely in vanilla web technologies—running straight out of the box with no installations or builds required.
 
 🌐 Project Links
-GitHub Repository: [https://github.com/Chandrika25-10/AppleShooter3D](https://github.com/Chandrika25-10/AppleShooter3D) 
+GitHub Repository: [https://github.com/Chandrika25-10/AppleShooter3D](https://github.com/chandrika25-10/AppleShooter3D) 
 
-Live Demo (GitHub Pages): [https://Chandrika25-10.github.io/AppleShooter3D/](https://Chandrika25-10.github.io/AppleShooter3D/)
+Live Demo (GitHub Pages): [https://Chandrika25-10.github.io/AppleShooter3D/](https://chandrika25-10.github.io/apple-shooter-3d/)
 
 📌 Project Overview
 Traditional browser arcade games often rely on heavy game engines or external runtimes that require complex setups. Apple Shooter 3D — Forest Range demonstrates how fluid gameplay, responsive HUD elements, physics calculations, and local persistence can be achieved using native browser capabilities alone.
