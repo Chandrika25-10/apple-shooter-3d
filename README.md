@@ -1,3 +1,9 @@
+## Contributors
+* Chandrika: Core Game Logic
+* Hema: UI & Design
+* Chandini: Mechanics & Physics
+* Charishma: Documentation & Testing
+
 # Apple Shooter — Forest Adventure
 
 A browser-playable, canvas-based archery game. No Python, package install, or external assets are required.
