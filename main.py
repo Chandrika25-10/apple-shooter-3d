@@ -1,3 +1,5 @@
+# Module: Core Game Logic and Setup
+# Contributor: Chandrika
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 import threading
