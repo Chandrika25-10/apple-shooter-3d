@@ -1,447 +1,203 @@
-/* UI Styling and Visual Layout - Contributed by Hema */
-:root {
-    --gold: #ffd66b;
-    --glass: rgba(8, 23, 27, .82);
-    --line: rgba(255, 255, 255, .22)
-}
-
 * {
-    box-sizing: border-box
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-html,
-body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #153c37;
-    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color: #fff
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0d1a12;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #fff;
 }
 
-canvas {
-    display: block;
-    width: 100vw;
-    height: 100vh
+#game {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 #hud {
-    position: fixed;
-    inset: 0;
-    pointer-events: none
-}
-
-#top {
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    top: 14px;
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    align-items: flex-start
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
 }
 
 .panel {
-    background: var(--glass);
-    border: 1px solid var(--line);
-    backdrop-filter: blur(12px);
-    border-radius: 15px;
-    box-shadow: 0 10px 30px #071b1b3b
+  background: rgba(14, 28, 20, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  pointer-events: auto;
+}
+
+#top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 #brand {
-    padding: 12px 16px;
-    font-weight: 950;
-    letter-spacing: .09em;
-    font-size: 14px
+  padding: 10px 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 #brand span {
-    color: var(--gold)
+  color: #55e691;
 }
 
 .stats {
-    padding: 10px 14px;
-    display: flex;
-    gap: 18px;
-    flex-wrap: wrap;
-    font-size: 11px;
-    letter-spacing: .08em
+  display: flex;
+  gap: 16px;
+  padding: 10px 16px;
+}
+
+.stat {
+  font-size: 11px;
+  color: #8fa89b;
+  display: flex;
+  flex-direction: column;
 }
 
 .stat b {
-    display: block;
-    font-size: 20px;
-    color: var(--gold);
-    letter-spacing: 0;
-    margin-top: 2px
-}
-
-#help {
-    position: absolute;
-    left: 16px;
-    bottom: 16px;
-    padding: 12px 14px;
-    font-size: 12px;
-    color: #e0efea;
-    max-width: 310px;
-    line-height: 1.55
-}
-
-#controls {
-    position: absolute;
-    right: 18px;
-    bottom: 18px;
-    display: grid;
-    grid-template-columns: repeat(3, 54px);
-    gap: 8px;
-    pointer-events: auto;
-    align-items: center;
-    justify-items: stretch
-}
-
-#controls span {
-    height: 1px
-}
-
-button {
-    font: inherit;
-    color: #fff;
-    border: 1px solid #ffffff38;
-    background: linear-gradient(180deg, #31525aee, #142d31f2);
-    border-radius: 12px;
-    padding: 10px 12px;
-    cursor: pointer;
-    box-shadow: 0 4px 0 #081a1b;
-    transition: transform .08s, filter .15s;
-    user-select: none;
-    touch-action: manipulation
-}
-
-button:hover {
-    filter: brightness(1.18)
-}
-
-button:active {
-    transform: translateY(3px);
-    box-shadow: 0 1px 0 #081a1b
-}
-
-#controls button {
-    font-size: 19px;
-    padding: 11px 0;
-    min-height: 46px
-}
-
-#shoot {
-    grid-column: 2/4;
-    background: linear-gradient(180deg, #ffe08a, #db8a25);
-    color: #2b1b07;
-    font-weight: 950;
-    font-size: 13px;
-    letter-spacing: .04em;
-    min-height: 48px
+  font-size: 16px;
+  color: #fff;
 }
 
 #sound {
-    pointer-events: auto;
-    position: absolute;
-    top: 74px;
-    right: 16px;
-    padding: 8px 11px;
-    font-size: 12px
-}
-
-#center {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: auto;
-    background: linear-gradient(90deg, #061b1a55, #061b1a35, #061b1a75);
-    padding: 12px
-}
-
-.dialog {
-    width: min(520px, calc(100vw - 28px));
-    padding: 28px;
-    text-align: center;
-    max-height: 92vh;
-    overflow: auto
-}
-
-.eyebrow {
-    font-size: 11px;
-    letter-spacing: .2em;
-    color: #c3dfd8;
-    font-weight: 850;
-    margin-bottom: 12px
-}
-
-.dialog h1 {
-    font-size: clamp(28px, 5vw, 48px);
-    line-height: .98;
-    margin: 5px 0 15px;
-    letter-spacing: -.05em;
-    font-weight: 950
-}
-
-.dialog h1 em {
-    font-style: normal;
-    color: var(--gold)
-}
-
-.title-small {
-    font-size: .57em;
-    letter-spacing: .04em;
-    color: #d6e8df
-}
-
-.dialog p {
-    color: #d6e6e0;
-    line-height: 1.55;
-    margin: 0 0 18px
-}
-
-.gold-line {
-    color: var(--gold) !important;
-    font-weight: 850
-}
-
-.fineprint {
-    font-size: 11px;
-    margin: 18px 0 0 !important;
-    opacity: .8
-}
-
-.actions {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap
-}
-
-.primary {
-    background: linear-gradient(180deg, #ffe08a, #e59a32);
-    color: #2b1b07;
-    font-weight: 950;
-    border: 0;
-    padding: 12px 19px
-}
-
-.secondary {
-    padding: 12px 17px
+  position: absolute;
+  top: 75px;
+  left: 16px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #fff;
+  cursor: pointer;
 }
 
 #message {
-    position: absolute;
-    left: 50%;
-    top: 24%;
-    transform: translateX(-50%);
-    font-weight: 950;
-    font-size: clamp(20px, 4vw, 38px);
-    text-shadow: 0 3px 14px #07120f;
-    opacity: 0;
-    transition: opacity .2s;
-    white-space: nowrap;
-    pointer-events: none
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  font-weight: 900;
+  color: #ffde59;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.8);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
-.character-dialog {
-    width: min(820px, calc(100vw - 24px));
-    padding: 22px;
-    max-height: 92vh;
-    overflow: auto
+#help {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  max-width: 280px;
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #cfdbd5;
 }
 
-.character-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
-    text-align: center
+#controls {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 54px);
+  grid-gap: 8px;
+  pointer-events: auto;
 }
 
-.character-card {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 7px;
-    padding: 12px 9px;
-    background: #ffffff0b;
-    border: 1px solid #ffffff20;
-    border-radius: 14px;
-    min-width: 0
+#controls button {
+  height: 50px;
+  background: rgba(14, 28, 20, 0.85);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.character-card.chosen {
-    border-color: #ffd66b88;
-    background: #ffd66b0b
+#controls button:active {
+  background: #55e691;
+  color: #000;
 }
 
-.character-card b {
-    font-size: 14px
+#controls #shoot {
+  grid-column: span 1;
+  font-weight: bold;
+  font-size: 12px;
+  background: #e63946;
+  border-color: #e63946;
 }
 
-.character-card small {
-    font-size: 11px;
-    color: #c6dadd;
-    min-height: 15px
+#center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.55);
 }
 
-.character-card button {
-    font-size: 11px;
-    padding: 9px 10px;
-    width: 100%
+.dialog {
+  max-width: 440px;
+  padding: 32px 24px;
+  text-align: center;
 }
 
-.portrait {
-    width: 100%;
-    max-width: 124px;
-    aspect-ratio: 100/128;
-    overflow: hidden;
-    border-radius: 12px;
-    border: 1px solid #ffffff25;
-    box-shadow: 0 6px 18px #0004
+.dialog h1 {
+  font-size: 32px;
+  margin: 12px 0;
+  line-height: 1.1;
 }
 
-.portrait svg {
-    width: 100%;
-    height: 100%;
-    display: block
+.dialog h1 em {
+  color: #e63946;
+  font-style: normal;
 }
 
-.portrait-1 {
-    filter: saturate(1.1)
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
 }
 
-.portrait-2 {
-    filter: contrast(1.08)
+.actions button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.portrait-3 {
-    filter: sepia(.1) saturate(1.15)
+.actions .primary {
+  background: #55e691;
+  color: #042411;
 }
 
-@media(max-width:760px) {
-    #top {
-        left: 7px;
-        right: 7px;
-        top: 7px;
-        gap: 5px;
-        align-items: flex-start
-    }
-
-    .stats {
-        gap: 8px;
-        padding: 7px 8px;
-        font-size: 9px
-    }
-
-    .stat b {
-        font-size: 15px
-    }
-
-    #brand {
-        font-size: 10px;
-        padding: 9px 10px;
-        letter-spacing: .03em
-    }
-
-    #sound {
-        top: 64px;
-        right: 8px;
-        font-size: 10px;
-        padding: 6px 8px
-    }
-
-    #help {
-        left: 8px;
-        bottom: 8px;
-        max-width: calc(100vw - 190px);
-        font-size: 10px;
-        padding: 8px 10px
-    }
-
-    #controls {
-        right: 8px;
-        bottom: 8px;
-        grid-template-columns: repeat(3, 42px);
-        gap: 5px
-    }
-
-    #controls button {
-        min-height: 39px;
-        font-size: 16px;
-        padding: 7px 0
-    }
-
-    #shoot {
-        min-height: 42px;
-        font-size: 11px
-    }
-
-    #message {
-        top: 26%
-    }
-
-    .dialog {
-        padding: 20px
-    }
-
-    .character-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px
-    }
-
-    .character-dialog {
-        padding: 15px
-    }
-
-    .character-card {
-        padding: 8px 6px
-    }
-
-    .portrait {
-        max-width: 100px
-    }
-}
-
-@media(max-height:540px) {
-    .dialog {
-        padding: 14px;
-        max-height: 95vh
-    }
-
-    .dialog h1 {
-        font-size: 27px;
-        margin-bottom: 8px
-    }
-
-    .dialog p {
-        margin-bottom: 10px
-    }
-
-    .character-dialog {
-        padding: 10px
-    }
-
-    .character-card {
-        gap: 4px;
-        padding: 6px
-    }
-
-    .portrait {
-        max-width: 66px
-    }
-
-    .character-card small {
-        font-size: 9px
-    }
-
-    #help {
-        display: none
-    }
+.actions .secondary {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
 }
