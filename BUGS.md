@@ -1,4 +1,4 @@
-Bug Tracking
+# Bug Tracking
 
 Record any problems discovered during game testing.
 
