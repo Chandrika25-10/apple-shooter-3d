@@ -4,57 +4,312 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
   <title>Apple Shooter 3D — Forest Range</title>
-  <link rel="stylesheet" href="./style.css">
+  <style>
+    * { box-sizing: border-box; user-select: none; -webkit-user-select: none; margin: 0; padding: 0; }
+    body, html { width: 100%; height: 100%; overflow: hidden; background: #0d1a12; font-family: sans-serif; color: #fff; }
+    #game { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: block; z-index: 1; }
+    #hud { position: absolute; inset: 0; pointer-events: none; display: flex; flex-direction: column; justify-content: space-between; padding: 16px; z-index: 10; }
+    .panel { background: rgba(14, 28, 20, 0.85); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; pointer-events: auto; }
+    #top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    #brand { padding: 8px 14px; font-weight: 800; font-size: 14px; }
+    #brand span { color: #55e691; }
+    .stats { display: flex; gap: 14px; padding: 8px 14px; }
+    .stat { font-size: 10px; color: #8fa89b; display: flex; flex-direction: column; }
+    .stat b { font-size: 15px; color: #fff; }
+    #message { position: absolute; top: 25%; left: 50%; transform: translate(-50%, -50%); font-size: 28px; font-weight: 900; color: #ffde59; text-shadow: 0 4px 10px rgba(0,0,0,0.9); pointer-events: none; opacity: 0; transition: opacity 0.2s; }
+    #help { position: absolute; bottom: 16px; left: 16px; max-width: 260px; padding: 10px; font-size: 11px; line-height: 1.4; color: #cfdbd5; }
+    #controls { position: absolute; bottom: 16px; right: 16px; display: grid; grid-template-columns: repeat(3, 50px); grid-gap: 6px; pointer-events: auto; }
+    #controls button { height: 46px; background: rgba(14, 28, 20, 0.9); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 6px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    #controls button:active { background: #55e691; color: #000; }
+    #controls #shoot { grid-column: span 1; font-weight: bold; font-size: 11px; background: #e63946; border-color: #e63946; color: #fff; }
+    #center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: auto; background: rgba(0, 0, 0, 0.7); z-index: 20; }
+    .dialog { max-width: 380px; width: 90%; padding: 28px 20px; text-align: center; }
+    .dialog h1 { font-size: 28px; margin: 10px 0; }
+    .dialog h1 em { color: #e63946; font-style: normal; }
+    .actions { display: flex; gap: 10px; margin-top: 20px; }
+    .actions button { flex: 1; padding: 12px; border-radius: 6px; border: none; font-weight: 800; cursor: pointer; }
+    .actions .primary { background: #55e691; color: #042411; }
+    .actions .secondary { background: rgba(255,255,255,0.2); color: #fff; }
+  </style>
 </head>
 <body>
   <canvas id="game"></canvas>
 
   <div id="hud">
     <div id="top">
-      <div id="brand" class="panel">FOREST <span>ARCHER</span> <small style="opacity:.6">/ 3D RANGE</small></div>
+      <div id="brand" class="panel">FOREST <span>ARCHER</span></div>
       <div class="stats panel">
         <div class="stat">LEVEL<b id="level">1</b></div>
         <div class="stat">APPLES<b id="apples">0 / 3</b></div>
         <div class="stat">ARROWS<b id="arrows">8</b></div>
-        <div class="stat">COINS<b id="coins">0</b></div>
-        <div class="stat" id="timerStat">TIME<b id="timer">—</b></div>
+        <div class="stat">SCORE<b id="coins">0</b></div>
       </div>
     </div>
 
-    <button id="sound" class="panel">♫ Sound: On</button>
     <div id="message"></div>
     
     <div id="help" class="panel">
       <b>HOW TO PLAY</b><br>
-      Use ◀ ▶ to aim and ▲ ▼ to adjust elevation.<br>
-      Press <b>SPACE</b> or <b>SHOOT</b>. Hit every apple!
+      Aim: <b>Arrow Keys</b> or on-screen buttons.<br>
+      Shoot: <b>SPACEBAR</b> or <b>SHOOT</b> button.<br>
+      Hit all apples to advance!
     </div>
 
     <div id="controls">
-      <span></span><button id="up" aria-label="Aim up">▲</button><span></span>
-      <button id="left" aria-label="Aim left">◀</button>
-      <button id="down" aria-label="Aim down">▼</button>
-      <button id="right" aria-label="Aim right">▶</button>
-      <span></span><button id="shoot">➤ SHOOT</button><span></span>
+      <span></span><button id="up">▲</button><span></span>
+      <button id="left">◀</button><button id="down">▼</button><button id="right">▶</button>
+      <span></span><button id="shoot">SHOOT</button><span></span>
     </div>
 
     <div id="center">
       <div class="dialog panel">
-        <div style="font-size:12px;letter-spacing:.2em;color:#b8d1d5;font-weight:800">AIM • DRAW • RELEASE</div>
+        <div style="font-size:11px;letter-spacing:.2em;color:#b8d1d5;font-weight:800">AIM • DRAW • RELEASE</div>
         <h1>APPLE <em>SHOOTER</em><br>3D FOREST</h1>
-        <p>A cinematic archery challenge. Aim with the controls, shoot the apples, and advance through levels.</p>
+        <p style="font-size:13px;opacity:0.85;margin-bottom:15px;">Archery range challenge. Hit every apple before you run out of arrows!</p>
         <div class="actions">
-          <button class="primary" id="timed">PLAY — TIMED</button>
-          <button class="secondary" id="relaxed">PLAY — NO TIMER</button>
+          <button class="primary" id="startBtn">PLAY GAME</button>
         </div>
-        <p style="font-size:11px;margin:18px 0 0;opacity:.72">Runs locally in Chrome • No install required</p>
       </div>
     </div>
   </div>
 
-  <!-- Three.js CDN -->
+  <!-- THREE.JS BUNDLE -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!-- Game logic -->
-  <script src="./game.js" defer></script>
+
+  <script>
+    let scene, camera, renderer;
+    let apples = [], arrows = [];
+    let yaw = 0, pitch = 0;
+    let level = 1, applesHit = 0, totalApples = 3, arrowsRemaining = 8, scoreCoins = 0;
+    let gameActive = false;
+
+    const canvas = document.getElementById('game');
+    const centerModal = document.getElementById('center');
+    const levelEl = document.getElementById('level');
+    const applesEl = document.getElementById('apples');
+    const arrowsEl = document.getElementById('arrows');
+    const coinsEl = document.getElementById('coins');
+    const messageEl = document.getElementById('message');
+
+    // Simple built-in audio synthesizer
+    let audioCtx = null;
+    function playTone(freq, duration) {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    function init() {
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x567d64);
+      scene.fog = new THREE.FogExp2(0x567d64, 0.02);
+
+      camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.set(0, 1.6, 0);
+
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const ambient = new THREE.AmbientLight(0xffffff, 0.85);
+      scene.add(ambient);
+
+      const sunlight = new THREE.DirectionalLight(0xfff5cc, 0.8);
+      sunlight.position.set(10, 25, 10);
+      scene.add(sunlight);
+
+      // Floor
+      const floor = new THREE.Mesh(
+        new THREE.PlaneGeometry(200, 200),
+        new THREE.MeshLambertMaterial({ color: 0x223d24 })
+      );
+      floor.rotation.x = -Math.PI / 2;
+      scene.add(floor);
+
+      // Trees
+      for (let i = 0; i < 35; i++) {
+        const x = (Math.random() - 0.5) * 60;
+        const z = -5 - Math.random() * 50;
+        if (Math.abs(x) < 4 && z > -25) continue;
+        
+        const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.3, 3), new THREE.MeshLambertMaterial({ color: 0x472b15 }));
+        trunk.position.set(x, 1.5, z);
+        const leaves = new THREE.Mesh(new THREE.ConeGeometry(1.5, 4, 5), new THREE.MeshLambertMaterial({ color: 0x18421c }));
+        leaves.position.set(x, 4.5, z);
+        scene.add(trunk);
+        scene.add(leaves);
+      }
+
+      // Visual Bow
+      const bow = new THREE.Mesh(
+        new THREE.TorusGeometry(0.4, 0.02, 6, 18, Math.PI),
+        new THREE.MeshLambertMaterial({ color: 0x8b5a2b })
+      );
+      bow.rotation.z = -Math.PI / 2;
+      bow.rotation.y = Math.PI / 2;
+      bow.position.set(0.15, -0.2, -0.5);
+      camera.add(bow);
+      scene.add(camera);
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      setupInput();
+      animate();
+    }
+
+    function spawnApples() {
+      apples.forEach(a => scene.remove(a));
+      apples = [];
+      const mat = new THREE.MeshStandardMaterial({ color: 0xe63946, roughness: 0.3 });
+      const dist = -12 - (level * 2);
+
+      for (let i = 0; i < totalApples; i++) {
+        const apple = new THREE.Mesh(new THREE.SphereGeometry(0.38, 16, 16), mat);
+        const offset = (i - (totalApples - 1) / 2) * 2.8;
+        apple.position.set(offset, 1.2 + Math.random() * 1.6, dist);
+        scene.add(apple);
+        apples.push(apple);
+      }
+    }
+
+    function shoot() {
+      if (!gameActive || arrowsRemaining <= 0) return;
+      arrowsRemaining--;
+      updateUI();
+      playTone(400, 0.08);
+
+      const arrow = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.025, 0.025, 0.8),
+        new THREE.MeshBasicMaterial({ color: 0xffffff })
+      );
+      arrow.rotation.x = Math.PI / 2;
+
+      const group = new THREE.Group();
+      group.add(arrow);
+      group.position.copy(camera.position);
+      group.rotation.copy(camera.rotation);
+
+      const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
+      group.userData = { vel: dir.multiplyScalar(38), alive: true };
+      scene.add(group);
+      arrows.push(group);
+
+      if (arrowsRemaining === 0 && applesHit < totalApples) {
+        setTimeout(() => {
+          if (applesHit < totalApples) {
+            msg("Out of Arrows! Try Again.");
+            gameActive = false;
+            setTimeout(() => { centerModal.style.display = 'flex'; }, 1500);
+          }
+        }, 1200);
+      }
+    }
+
+    function msg(text) {
+      messageEl.textContent = text;
+      messageEl.style.opacity = '1';
+      setTimeout(() => { messageEl.style.opacity = '0'; }, 1200);
+    }
+
+    function updateUI() {
+      levelEl.textContent = level;
+      applesEl.textContent = `${applesHit} / ${totalApples}`;
+      arrowsEl.textContent = arrowsRemaining;
+      coinsEl.textContent = scoreCoins;
+    }
+
+    function setupInput() {
+      const step = 0.05;
+      document.getElementById('up').onclick = () => pitch = Math.min(pitch + step, 0.5);
+      document.getElementById('down').onclick = () => pitch = Math.max(pitch - step, -0.5);
+      document.getElementById('left').onclick = () => yaw += step;
+      document.getElementById('right').onclick = () => yaw -= step;
+      document.getElementById('shoot').onclick = shoot;
+
+      window.addEventListener('keydown', (e) => {
+        if (e.code === 'ArrowUp' || e.key === 'w') pitch = Math.min(pitch + step, 0.5);
+        if (e.code === 'ArrowDown' || e.key === 's') pitch = Math.max(pitch - step, -0.5);
+        if (e.code === 'ArrowLeft' || e.key === 'a') yaw += step;
+        if (e.code === 'ArrowRight' || e.key === 'd') yaw -= step;
+        if (e.code === 'Space') shoot();
+      });
+
+      document.getElementById('startBtn').onclick = () => {
+        centerModal.style.display = 'none';
+        level = 1;
+        totalApples = 3;
+        applesHit = 0;
+        arrowsRemaining = 8;
+        scoreCoins = 0;
+        gameActive = true;
+        spawnApples();
+        updateUI();
+      };
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      camera.rotation.set(pitch, yaw, 0, 'YXZ');
+
+      // Apple floating
+      const t = Date.now() * 0.0025;
+      apples.forEach((a, i) => a.position.y += Math.sin(t + i) * 0.006);
+
+      // Arrow physics & collision
+      for (let i = arrows.length - 1; i >= 0; i--) {
+        const arr = arrows[i];
+        if (!arr.userData.alive) continue;
+
+        arr.userData.vel.y -= 0.12; // Gravity
+        arr.position.addScaledVector(arr.userData.vel, 0.016);
+
+        // Check collision
+        for (let j = apples.length - 1; j >= 0; j--) {
+          const apple = apples[j];
+          if (arr.position.distanceTo(apple.position) < 0.6) {
+            scene.remove(apple);
+            apples.splice(j, 1);
+            applesHit++;
+            scoreCoins += 20;
+            updateUI();
+            playTone(850, 0.15);
+
+            if (applesHit >= totalApples) {
+              level++;
+              msg(`Level ${level}!`);
+              totalApples = Math.min(6, totalApples + 1);
+              arrowsRemaining = totalApples + 4;
+              applesHit = 0;
+              setTimeout(spawnApples, 500);
+            }
+            break;
+          }
+        }
+
+        if (arr.position.y < 0 || arr.position.z < -90) {
+          scene.remove(arr);
+          arrows.splice(i, 1);
+        }
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('load', init);
+  </script>
 </body>
 </html>
