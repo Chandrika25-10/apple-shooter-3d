@@ -7,7 +7,7 @@ The game models arrow trajectories, target movement, elevation adjustments, and 
 🌐 Project Links
 GitHub Repository: [https://github.com/Chandrika25-10/apple-shooter-3d](https://github.com/Chandrika25-10/apple-shooter-3d) 
 
-Live Demo (GitHub Pages): [https://chandrika25-10.github.io/AppleShooter3D/](https://chandrika25-10.github.io/apple-shooter-3d/)
+Live Demo (GitHub Pages): [https://chandrika25-10.github.io/apple-shooter-3d/](https://chandrika25-10.github.io/apple-shooter-3d/)
 
 📌 Project Overview
 Traditional browser arcade games often rely on heavy game engines or external runtimes that require complex setups. Apple Shooter 3D — Forest Range demonstrates how fluid gameplay, responsive HUD elements, physics calculations, and local persistence can be achieved using native browser capabilities alone.
