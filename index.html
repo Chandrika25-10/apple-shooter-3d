@@ -1,45 +1,60 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>Apple Shooter 3D — Forest Range</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <title>Apple Shooter 3D — Forest Range</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<canvas id="game"></canvas>
-<div id="hud">
-  <div id="top">
-    <div id="brand" class="panel">FOREST <span>ARCHER</span> <small style="opacity:.6">/ 3D RANGE</small></div>
-    <div class="stats panel">
-      <div class="stat">LEVEL<b id="level">1</b></div>
-      <div class="stat">APPLES<b id="apples">0 / 3</b></div>
-      <div class="stat">ARROWS<b id="arrows">8</b></div>
-      <div class="stat">COINS<b id="coins">0</b></div>
-      <div class="stat" id="timerStat">TIME<b id="timer">—</b></div>
-    </div>
-  </div>
-  <button id="sound" class="panel">♫ Sound: On</button>
-  <div id="message"></div>
-  <div id="help" class="panel"><b>HOW TO PLAY</b><br>Use ◀ ▶ to aim and ▲ ▼ to adjust elevation. Press <b>SPACE</b> or SHOOT. Hit every apple to clear the level. Each level gets trickier.</div>
-  <div id="controls">
-    <span></span><button id="up" aria-label="Aim up">▲</button><span></span>
-    <button id="left" aria-label="Aim left">◀</button><button id="down" aria-label="Aim down">▼</button><button id="right" aria-label="Aim right">▶</button>
-    <span></span><button id="shoot">➤ SHOOT</button><span></span>
-  </div>
-  <div id="center">
-    <div class="dialog panel">
-      <div style="font-size:12px;letter-spacing:.2em;color:#b8d1d5;font-weight:800">AIM • DRAW • RELEASE</div>
-      <h1>APPLE <em>SHOOTER</em><br>3D FOREST</h1>
-      <p>A cinematic archery challenge. Aim with the remote controls, shoot the moving apples, and climb through endless levels.</p>
-      <div class="actions">
-        <button class="primary" id="timed">PLAY — TIMED</button>
-        <button class="secondary" id="relaxed">PLAY — NO TIMER</button>
+  <canvas id="game"></canvas>
+
+  <div id="hud">
+    <div id="top">
+      <div id="brand" class="panel">FOREST <span>ARCHER</span> <small style="opacity:.6">/ 3D RANGE</small></div>
+      <div class="stats panel">
+        <div class="stat">LEVEL<b id="level">1</b></div>
+        <div class="stat">APPLES<b id="apples">0 / 3</b></div>
+        <div class="stat">ARROWS<b id="arrows">8</b></div>
+        <div class="stat">COINS<b id="coins">0</b></div>
+        <div class="stat" id="timerStat">TIME<b id="timer">—</b></div>
       </div>
-      <p style="font-size:11px;margin:18px 0 0;opacity:.72">Runs locally in Chrome • No install required</p>
+    </div>
+
+    <button id="sound" class="panel">♫ Sound: On</button>
+    <div id="message"></div>
+    
+    <div id="help" class="panel">
+      <b>HOW TO PLAY</b><br>
+      Use ◀ ▶ to aim and ▲ ▼ to adjust elevation.<br>
+      Press <b>SPACE</b> or <b>SHOOT</b>. Hit every apple!
+    </div>
+
+    <div id="controls">
+      <span></span><button id="up" aria-label="Aim up">▲</button><span></span>
+      <button id="left" aria-label="Aim left">◀</button>
+      <button id="down" aria-label="Aim down">▼</button>
+      <button id="right" aria-label="Aim right">▶</button>
+      <span></span><button id="shoot">➤ SHOOT</button><span></span>
+    </div>
+
+    <div id="center">
+      <div class="dialog panel">
+        <div style="font-size:12px;letter-spacing:.2em;color:#b8d1d5;font-weight:800">AIM • DRAW • RELEASE</div>
+        <h1>APPLE <em>SHOOTER</em><br>3D FOREST</h1>
+        <p>A cinematic archery challenge. Aim with the controls, shoot the apples, and advance through levels.</p>
+        <div class="actions">
+          <button class="primary" id="timed">PLAY — TIMED</button>
+          <button class="secondary" id="relaxed">PLAY — NO TIMER</button>
+        </div>
+        <p style="font-size:11px;margin:18px 0 0;opacity:.72">Runs locally in Chrome • No install required</p>
+      </div>
     </div>
   </div>
-</div>
-<script src="game.js" defer></script>
+
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Game logic -->
+  <script src="./game.js" defer></script>
 </body>
 </html>
